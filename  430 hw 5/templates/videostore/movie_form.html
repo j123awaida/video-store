@@ -1,0 +1,18 @@
+{% extends "videostore/base.html" %}
+{% block content %}
+<h2 class="mb-3">{{ view.object|default_if_none:"Add Movie" }}</h2>
+<form method="post" class="bg-white p-3 rounded border">
+  {% csrf_token %}
+  {% for field in form %}
+    <div class="mb-3">
+      <label class="form-label">{{ field.label }}</label>
+      {{ field }}
+      {% if field.errors %}
+        <div class="text-danger small">{{ field.errors|striptags }}</div>
+      {% endif %}
+    </div>
+  {% endfor %}
+  <button class="btn btn-primary">Save</button>
+  <a class="btn btn-light" href="{% url 'movie-list' %}">Cancel</a>
+</form>
+{% endblock %}

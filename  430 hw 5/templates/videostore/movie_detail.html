@@ -1,0 +1,14 @@
+{% extends "videostore/base.html" %}
+{% block content %}
+<h2 class="mb-3">{{ object.title }} ({{ object.release_year }})</h2>
+<ul class="list-group mb-3">
+  <li class="list-group-item"><strong>MovieID:</strong> {{ object.movie_id }}</li>
+  <li class="list-group-item"><strong>Director:</strong> {{ object.director_name }}</li>
+  <li class="list-group-item"><strong>Actor 1:</strong> {{ object.actor1_name }}</li>
+  <li class="list-group-item"><strong>Actor 2:</strong> {{ object.actor2_name|default:"—" }}</li>
+  <li class="list-group-item"><strong>Genre:</strong> {{ object.genre }}</li>
+  <li class="list-group-item"><strong>Release Year:</strong> {{ object.release_year }}</li>
+</ul>
+<a class="btn btn-outline-secondary" href="{% url 'movie-edit' object.pk %}">Edit</a>
+<a class="btn btn-outline-danger" href="{% url 'movie-delete' object.pk %}">Delete</a>
+{% endblock %}

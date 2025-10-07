@@ -1,0 +1,10 @@
+{% extends "videostore/base.html" %}
+{% block content %}
+<h2>Delete “{{ object.title }}”?</h2>
+<p class="text-muted">This action cannot be undone.</p>
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-danger">Yes, delete</button>
+  <a class="btn btn-light" href="{% url 'movie-list' %}">Cancel</a>
+</form>
+{% endblock %}

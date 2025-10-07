@@ -1,0 +1,43 @@
+{% extends "videostore/base.html" %}
+{% block content %}
+<h1 class="mb-3">Movies</h1>
+
+<form method="get" class="row g-2 mb-3">
+  <div class="col-sm-10">
+    <input name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Search by title, actor, director, genre, or MovieID">
+  </div>
+  <div class="col-sm-2">
+    <button class="btn btn-outline-primary w-100">Search</button>
+  </div>
+</form>
+
+<table class="table table-striped bg-white">
+  <thead>
+    <tr>
+      <th>MovieID</th>
+      <th>Title</th>
+      <th>Director</th>
+      <th>Genre</th>
+      <th>Year</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for m in movies %}
+      <tr>
+        <td>{{ m.movie_id }}</td>
+        <td><a href="{{ m.get_absolute_url }}">{{ m.title }}</a></td>
+        <td>{{ m.director_name }}</td>
+        <td>{{ m.genre }}</td>
+        <td>{{ m.release_year }}</td>
+        <td class="text-end">
+          <a class="btn btn-sm btn-secondary" href="{% url 'movie-edit' m.pk %}">Edit</a>
+          <a class="btn btn-sm btn-danger" href="{% url 'movie-delete' m.pk %}">Delete</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6" class="text-center text-muted">No movies yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
