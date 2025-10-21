@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movieapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-app
+  template:
+    metadata:
+      labels:
+        app: movie-app
+    spec:
+      containers:
+      - name: movie-container
+        image: moviedjangoapp:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000

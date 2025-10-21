@@ -1,0 +1,37 @@
+pipeline {
+  agent any
+
+  triggers {
+    // Poll GitHub every 2 minutes
+    pollSCM('H/2 * * * *')
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'main', url: 'https://github.com/j123awaida/video-store.git'
+      }
+    }
+
+    stage('Build in Minikube Docker') {
+      steps {
+        sh '''
+        # === Switch Docker to Minikube Docker ===
+        eval $(minikube docker-env)
+
+        # === Build Django image inside Minikube Docker ===
+        docker build -t moviedjangoapp:latest .
+        '''
+      }
+    }
+
+    stage('Deploy to Minikube') {
+      steps {
+        sh '''
+        kubectl apply -f deployment.yaml
+        kubectl rollout status deployment/movieapp-deployment
+        '''
+      }
+    }
+  }
+}
